@@ -111,13 +111,23 @@ const stringReverse = (str) => {
 
 const statistics = (obj) => {
     let arr=[];
+    let count;
+    let res={};
     obj.reduce((p,c)=>{
         arr.push(c.votes_To);
     },'');
-    // arr.reduce((p1,c1)=>{
-
-    // })
-    return arr;
+    arr.reduce((p1,c1,index)=>{
+        count=0;
+        arr.reduce((p2,c2,i)=>{
+            if(c1==c2)
+            {
+                count++;
+            }
+        },'');
+        
+        res[[c1]]=count;
+    },'');
+    return res;
 }
 
 
