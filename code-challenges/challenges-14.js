@@ -104,42 +104,69 @@ const letterCounter = (str) => {
     let res=[];
     let resultArray=[];
     letters.forEach((letter)=>{
-        let c={};
+        let c=[];
         let count;
-        let result='';
+        let lett;
+        let result;
         res=letter.split('');
-        for(var i=0 ; i<res.length ; i++)
-        {
-            count=0;
-            if(res[i]==res[i+1])
+        count=1;
+        res.reduce((a,b,i,arr)=>{
+           
+            if(count==2 && arr[i+1]!=arr[i])
             {
-                for(let j=i ; j<res.length ; j++)
-                {
-                    count++;
-                    if(res[j+1]!=res[i])
-                    break;
-                }
-                
-                c[[res[i]]]=count;
-            
+                c.push(arr[i-1]);
+                c.push(count);
+                i++;
+                count=1;
+            }
+
+            if(arr[i-1]==arr[i])
+            {
+                count++;
+                lett=arr[i-1]; 
             }
             else
             {
-                count=1;
-                c[[res[i]]]=count;
-            }
+                c.push(arr[i-1]);
+                c.push(count);
+                if(arr[i+1]==undefined)
+                {
+                  c.push(arr[i]);
+                  c.push(count);
+                }
 
+            }
+            
+        });
+        if(count>2)
+        {
+            c.push(lett);
+            c.push(count);
         }
-
-        for(let key of Object.keys(c))
-            {
-                result+=`${key}${c[key]}`;
-            }
-
-        resultArray.push(result);
         
+        for(var j=0 ; j<c.length ; j++)
+        {
+          if(c[j]==undefined)
+          {
+            c.pop();
+            c.pop();
+          }
+        }
+        for(var t=0 ; t<c.length ; t+=2)
+        {
+          if(c[t]==c[t+2])
+          {
+            c[t+1]=c[t+1]+c[t+3];
+            c.pop();
+            c.pop();
+
+          }
+        }
+        resultArray.push(c.join(''));
+
     });
-    return resultArray.join(' ');
+    result=resultArray.join(' ');
+    return result;
 
 }
 
